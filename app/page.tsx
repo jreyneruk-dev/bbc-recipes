@@ -35,6 +35,10 @@ export default function Home() {
   const [heartedIds, setHeartedIds] = useState<Set<string>>(new Set())
   const [userRecipes, setUserRecipes] = useState<Recipe[]>([])
   const [showAddModal, setShowAddModal] = useState(false)
+  const [deleteMode, setDeleteMode] = useState(false)
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [confirmingDelete, setConfirmingDelete] = useState(false)
+  const [archiving, setArchiving] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
@@ -89,6 +93,37 @@ export default function Home() {
   async function signOut() {
     await supabase.auth.signOut()
     setUser(null)
+  }
+
+  function exitDeleteMode() {
+    setDeleteMode(false)
+    setSelectedIds(new Set())
+    setConfirmingDelete(false)
+  }
+
+  function toggleSelect(id: string) {
+    setSelectedIds(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+
+  async function archiveSelected() {
+    setArchiving(true)
+    try {
+      const res = await fetch('/api/recipes/archive', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: [...selectedIds] }),
+      })
+      if (res.ok) {
+        setUserRecipes(prev => prev.filter(r => !selectedIds.has(r.id)))
+        exitDeleteMode()
+      }
+    } finally {
+      setArchiving(false)
+    }
   }
 
   const initials = user?.email?.slice(0, 2).toUpperCase() ?? ''
@@ -228,13 +263,57 @@ export default function Home() {
               </button>
 
               <span className="ml-auto text-xs text-slate-400 shrink-0">{filtered.length} recipes</span>
-              {user && (
-                <button
-                  onClick={() => setShowAddModal(true)}
-                  className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 transition-colors shrink-0"
-                >
-                  <Plus size={13} /> Add recipe
-                </button>
+              {user && !deleteMode && (
+                <>
+                  <button
+                    onClick={() => setShowAddModal(true)}
+                    className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 transition-colors shrink-0"
+                  >
+                    <Plus size={13} /> Add recipe
+                  </button>
+                  {userRecipes.length > 0 && (
+                    <button
+                      onClick={() => setDeleteMode(true)}
+                      className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:border-red-300 hover:text-red-600 transition-colors shrink-0"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </>
+              )}
+              {deleteMode && !confirmingDelete && (
+                <>
+                  <span className="text-xs text-slate-500 shrink-0">
+                    {selectedIds.size > 0 ? `${selectedIds.size} selected` : 'Tap your recipes to select'}
+                  </span>
+                  <button
+                    onClick={() => setConfirmingDelete(true)}
+                    disabled={selectedIds.size === 0}
+                    className="px-3 py-2 text-sm rounded-lg bg-red-500 text-white font-medium disabled:opacity-40 hover:bg-red-600 transition-colors shrink-0"
+                  >
+                    Archive {selectedIds.size > 0 ? selectedIds.size : ''}
+                  </button>
+                  <button onClick={exitDeleteMode} className="px-3 py-2 text-sm text-slate-500 hover:text-slate-800 transition-colors shrink-0">
+                    Cancel
+                  </button>
+                </>
+              )}
+              {confirmingDelete && (
+                <>
+                  <span className="text-xs text-slate-700 font-medium shrink-0">
+                    Archive {selectedIds.size} recipe{selectedIds.size !== 1 ? 's' : ''}?
+                  </span>
+                  <button
+                    onClick={archiveSelected}
+                    disabled={archiving}
+                    className="px-3 py-2 text-sm rounded-lg bg-red-500 text-white font-medium disabled:opacity-50 hover:bg-red-600 transition-colors shrink-0"
+                  >
+                    {archiving ? 'Archiving…' : 'Confirm'}
+                  </button>
+                  <button onClick={() => setConfirmingDelete(false)} className="px-3 py-2 text-sm text-slate-500 hover:text-slate-800 transition-colors shrink-0">
+                    Cancel
+                  </button>
+                </>
               )}
             </div>
           </div>
@@ -257,6 +336,9 @@ export default function Home() {
                     onAuthRequired={() => setShowAuthModal(true)}
                     onToggle={handleToggle}
                     isUserRecipe={userRecipeIds.has(recipe.id)}
+                    deleteMode={deleteMode}
+                    isSelected={selectedIds.has(recipe.id)}
+                    onToggleSelect={() => toggleSelect(recipe.id)}
                   />
                 ))}
               </div>

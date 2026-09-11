@@ -13,6 +13,7 @@ export async function GET() {
     .from('user_recipes')
     .select('*')
     .eq('user_id', user.id)
+    .is('archived_at', null)
     .order('created_at', { ascending: false })
 
   return Response.json({ recipes: data ?? [] })

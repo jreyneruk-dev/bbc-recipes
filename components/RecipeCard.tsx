@@ -31,16 +31,32 @@ interface Props {
   onAuthRequired: () => void
   onToggle: (recipeId: string, hearted: boolean) => void
   isUserRecipe?: boolean
+  deleteMode?: boolean
+  isSelected?: boolean
+  onToggleSelect?: () => void
 }
 
-export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle, isUserRecipe }: Props) {
+export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle, isUserRecipe, deleteMode, isSelected, onToggleSelect }: Props) {
   const badgeClass = DISH_COLOURS[recipe.dishType] ?? DISH_COLOURS['Other']
+  const selectable = deleteMode && isUserRecipe
+
+  function handleClick() {
+    if (selectable) { onToggleSelect?.(); return }
+    if (recipe.url) window.open(recipe.url, '_blank')
+  }
 
   return (
     <div
-      onClick={() => recipe.url && window.open(recipe.url, '_blank')}
-      className={`group flex flex-col bg-white rounded-xl shadow-sm border overflow-hidden transition-all duration-150 ${recipe.url ? 'cursor-pointer hover:shadow-md hover:border-slate-200' : 'cursor-default'} ${isUserRecipe ? 'border-rose-100' : 'border-slate-100'}`}
+      onClick={handleClick}
+      className={`group relative flex flex-col bg-white rounded-xl shadow-sm border overflow-hidden transition-all duration-150 ${selectable ? 'cursor-pointer' : recipe.url ? 'cursor-pointer hover:shadow-md hover:border-slate-200' : 'cursor-default'} ${isSelected ? 'border-rose-400 ring-2 ring-rose-300' : isUserRecipe ? 'border-rose-100' : 'border-slate-100'} ${deleteMode && !isUserRecipe ? 'opacity-40 pointer-events-none' : ''}`}
     >
+      {selectable && (
+        <div className="absolute top-2 left-2 z-10">
+          <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${isSelected ? 'bg-rose-500 border-rose-500' : 'bg-white/90 border-slate-300'}`}>
+            {isSelected && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+          </div>
+        </div>
+      )}
       {recipe.image ? (
         <div className="relative w-full aspect-[4/3] bg-slate-100 shrink-0">
           <Image
@@ -63,15 +79,17 @@ export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle
           <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${badgeClass}`}>
             {recipe.dishType}
           </span>
-          <div onClick={e => e.stopPropagation()}>
-            <HeartButton
-              recipeId={recipe.id}
-              hearted={hearted}
-              loggedIn={loggedIn}
-              onAuthRequired={onAuthRequired}
-              onToggle={onToggle}
-            />
-          </div>
+          {!deleteMode && (
+            <div onClick={e => e.stopPropagation()}>
+              <HeartButton
+                recipeId={recipe.id}
+                hearted={hearted}
+                loggedIn={loggedIn}
+                onAuthRequired={onAuthRequired}
+                onToggle={onToggle}
+              />
+            </div>
+          )}
         </div>
         <p className="text-sm font-semibold text-slate-800 leading-snug line-clamp-2 mt-0.5">
           {recipe.title}

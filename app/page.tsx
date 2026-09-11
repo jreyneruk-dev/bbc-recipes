@@ -35,6 +35,7 @@ export default function Home() {
   const [heartedIds, setHeartedIds] = useState<Set<string>>(new Set())
   const [userRecipes, setUserRecipes] = useState<Recipe[]>([])
   const [showAddModal, setShowAddModal] = useState(false)
+  const [editingRecipe, setEditingRecipe] = useState<{ id: string; title: string; chef: string; dishType: string; imageUrl: string; ingredients: string; method: string; sourceUrl: string } | null>(null)
   const [deleteMode, setDeleteMode] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [confirmingDelete, setConfirmingDelete] = useState(false)
@@ -339,6 +340,16 @@ export default function Home() {
                     deleteMode={deleteMode}
                     isSelected={selectedIds.has(recipe.id)}
                     onToggleSelect={() => toggleSelect(recipe.id)}
+                    onEdit={userRecipeIds.has(recipe.id) ? async () => {
+                      const res = await fetch(`/api/recipes/${recipe.id}`)
+                      const { recipe: full } = await res.json()
+                      if (full) setEditingRecipe({
+                        id: full.id, title: full.title, chef: full.chef,
+                        dishType: full.dish_type, imageUrl: full.image_url ?? '',
+                        ingredients: full.ingredients ?? '', method: full.method ?? '',
+                        sourceUrl: full.source_url ?? '',
+                      })
+                    } : undefined}
                   />
                 ))}
               </div>
@@ -357,6 +368,19 @@ export default function Home() {
               dishType: recipe.dish_type, url: `/recipe/${recipe.id}`, image: recipe.image_url ?? null,
             }, ...prev])
             setShowAddModal(false)
+          }}
+        />
+      )}
+      {editingRecipe && (
+        <AddRecipeModal
+          onClose={() => setEditingRecipe(null)}
+          editRecipe={editingRecipe}
+          onSaved={recipe => {
+            setUserRecipes(prev => prev.map(r => r.id === recipe.id ? {
+              ...r, title: recipe.title, chef: recipe.chef,
+              dishType: recipe.dish_type, image: recipe.image_url ?? null,
+            } : r))
+            setEditingRecipe(null)
           }}
         />
       )}

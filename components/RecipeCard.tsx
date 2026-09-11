@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { Pencil } from 'lucide-react'
 import { HeartButton } from './HeartButton'
 
 const DISH_COLOURS: Record<string, string> = {
@@ -34,9 +35,10 @@ interface Props {
   deleteMode?: boolean
   isSelected?: boolean
   onToggleSelect?: () => void
+  onEdit?: () => void
 }
 
-export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle, isUserRecipe, deleteMode, isSelected, onToggleSelect }: Props) {
+export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle, isUserRecipe, deleteMode, isSelected, onToggleSelect, onEdit }: Props) {
   const badgeClass = DISH_COLOURS[recipe.dishType] ?? DISH_COLOURS['Other']
   const selectable = deleteMode && isUserRecipe
 
@@ -95,7 +97,20 @@ export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle
           {recipe.title}
         </p>
         <p className="text-xs text-slate-400 mt-auto pt-1">{recipe.chef}</p>
-        {isUserRecipe && <p className="text-[9px] text-rose-400 italic">My recipe</p>}
+        {isUserRecipe && (
+          <div className="flex items-center justify-between">
+            <p className="text-[9px] text-rose-400 italic">My recipe</p>
+            {!deleteMode && onEdit && (
+              <button
+                onClick={e => { e.stopPropagation(); onEdit() }}
+                className="text-slate-300 hover:text-slate-600 transition-colors p-0.5"
+                title="Edit recipe"
+              >
+                <Pencil size={11} />
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

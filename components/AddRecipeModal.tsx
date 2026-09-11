@@ -20,15 +20,26 @@ interface ExtractedRecipe {
   method: string
 }
 
+interface EditRecipe {
+  id: string; title: string; chef: string; dishType: string; imageUrl: string; ingredients: string; method: string; sourceUrl: string
+}
+
 interface Props {
   onSaved: (recipe: { id: string; title: string; chef: string; dish_type: string; source_url: string; image_url: string }) => void
   onClose: () => void
+  editRecipe?: EditRecipe
 }
 
-export function AddRecipeModal({ onSaved, onClose }: Props) {
-  const [tab, setTab] = useState<'url' | 'photo' | 'form'>('url')
+export function AddRecipeModal({ onSaved, onClose, editRecipe }: Props) {
+  const isEditing = !!editRecipe
+  const [tab, setTab] = useState<'url' | 'photo' | 'form'>(isEditing ? 'form' : 'url')
   const [manual, setManual] = useState<ExtractedRecipe>({
-    title: '', chef: '', dishType: 'Main course', imageUrl: '', ingredients: '', method: '',
+    title: editRecipe?.title ?? '',
+    chef: editRecipe?.chef ?? '',
+    dishType: editRecipe?.dishType ?? 'Main course',
+    imageUrl: editRecipe?.imageUrl ?? '',
+    ingredients: editRecipe?.ingredients ?? '',
+    method: editRecipe?.method ?? '',
   })
   const [imageUploading, setImageUploading] = useState(false)
   const formImageRef = useRef<HTMLInputElement>(null)
@@ -70,10 +81,10 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
   }) {
     setSaving(true); setError('')
     try {
-      const res = await fetch('/api/recipes', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ recipe: { ...fields, chef: fields.chef || 'My recipe' } }),
-      })
+      const body = { recipe: { ...fields, chef: fields.chef || 'My recipe' } }
+      const res = isEditing
+        ? await fetch(`/api/recipes/${editRecipe!.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        : await fetch('/api/recipes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       const data = await res.json()
       if (data.error) { setError(data.error); return }
       onSaved(data.recipe)
@@ -112,19 +123,19 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
 
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-          <h2 className="text-sm font-semibold text-slate-800">Add recipe</h2>
+          <h2 className="text-sm font-semibold text-slate-800">{isEditing ? 'Edit recipe' : 'Add recipe'}</h2>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors"><X size={16} /></button>
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-1 px-5 pt-4">
+        {/* Tabs — hidden when editing (always shows the form) */}
+        {!isEditing && <div className="flex gap-1 px-5 pt-4">
           {tabs.map(([t, label, icon]) => (
             <button key={t} onClick={() => { setTab(t); setExtracted(null); setError('') }}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${tab === t ? 'bg-rose-500 text-white' : 'text-slate-600 hover:text-slate-900'}`}>
               {icon}{label}
             </button>
           ))}
-        </div>
+        </div>}
 
         <div className="px-5 py-4 space-y-4 max-h-[70vh] overflow-y-auto">
 

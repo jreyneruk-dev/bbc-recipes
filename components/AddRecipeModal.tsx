@@ -177,7 +177,7 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
                     value={url}
                     onChange={e => setUrl(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handleUrl()}
-                    className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="flex-1 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
                   />
                   <button
                     onClick={handleUrl}
@@ -211,37 +211,37 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
           {tab === 'form' && !extracted && (
             <div className="space-y-3">
               <div>
-                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Title *</label>
+                <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Title *</label>
                 <input
                   value={manual.title}
                   onChange={e => setManual(p => ({ ...p, title: e.target.value }))}
                   placeholder="e.g. Grandma's apple crumble"
-                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  className="w-full mt-1 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
                 />
               </div>
               <div className="flex gap-2">
                 <div className="flex-1">
-                  <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Chef / source</label>
+                  <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Chef / source</label>
                   <input
                     value={manual.chef}
                     onChange={e => setManual(p => ({ ...p, chef: e.target.value }))}
                     placeholder="e.g. Nigel Slater"
-                    className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="w-full mt-1 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Dish type</label>
+                  <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Dish type</label>
                   <select
                     value={manual.dishType}
                     onChange={e => setManual(p => ({ ...p, dishType: e.target.value }))}
-                    className="mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="mt-1 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
                   >
                     {DISH_TYPES.map(t => <option key={t}>{t}</option>)}
                   </select>
                 </div>
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Image <span className="normal-case font-normal">(optional)</span></label>
+                <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Image <span className="normal-case font-normal">(optional)</span></label>
                 <input ref={formImageRef} type="file" accept="image/*" onChange={handleFormImage} className="hidden" />
                 {manual.imageUrl ? (
                   <div className="mt-1 flex items-center gap-2">
@@ -266,23 +266,23 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
                 )}
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Ingredients</label>
+                <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Ingredients</label>
                 <textarea
                   value={manual.ingredients}
                   onChange={e => setManual(p => ({ ...p, ingredients: e.target.value }))}
                   rows={5}
                   placeholder="1 egg&#10;200g flour&#10;…"
-                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y"
+                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y placeholder:text-slate-400"
                 />
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Method</label>
+                <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Method</label>
                 <textarea
                   value={manual.method}
                   onChange={e => setManual(p => ({ ...p, method: e.target.value }))}
                   rows={6}
                   placeholder="1. Preheat oven to 180°C&#10;2. …"
-                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y"
+                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y placeholder:text-slate-400"
                 />
               </div>
               {error && <p className="text-xs text-red-500">{error}</p>}
@@ -333,49 +333,49 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
                 </div>
               )}
               <div>
-                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Title</label>
+                <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Title</label>
                 <input
                   value={extracted.title}
                   onChange={e => setExtracted(p => p && { ...p, title: e.target.value })}
-                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  className="w-full mt-1 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
                 />
               </div>
               <div className="flex gap-2">
                 <div className="flex-1">
-                  <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Chef / source</label>
+                  <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Chef / source</label>
                   <input
                     value={extracted.chef}
                     onChange={e => setExtracted(p => p && { ...p, chef: e.target.value })}
-                    className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="w-full mt-1 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Dish type</label>
+                  <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Dish type</label>
                   <select
                     value={extracted.dishType}
                     onChange={e => setExtracted(p => p && { ...p, dishType: e.target.value })}
-                    className="mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="mt-1 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
                   >
                     {DISH_TYPES.map(t => <option key={t}>{t}</option>)}
                   </select>
                 </div>
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Ingredients</label>
+                <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Ingredients</label>
                 <textarea
                   value={extracted.ingredients}
                   onChange={e => setExtracted(p => p && { ...p, ingredients: e.target.value })}
                   rows={5}
-                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y"
+                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y placeholder:text-slate-400"
                 />
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Method</label>
+                <label className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">Method</label>
                 <textarea
                   value={extracted.method}
                   onChange={e => setExtracted(p => p && { ...p, method: e.target.value })}
                   rows={6}
-                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y"
+                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y placeholder:text-slate-400"
                 />
               </div>
               {error && <p className="text-xs text-red-500">{error}</p>}

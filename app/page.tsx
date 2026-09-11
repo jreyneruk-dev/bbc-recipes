@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { Search, Heart, LogOut, ChevronDown } from 'lucide-react'
+import { Search, Heart, LogOut, ChevronDown, UtensilsCrossed } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { RecipeCard } from '@/components/RecipeCard'
 import { AuthModal } from '@/components/AuthModal'
+import { PlannerTab } from '@/components/PlannerTab'
 import recipesData from '@/data/recipes.json'
 
 interface Recipe {
@@ -27,6 +28,7 @@ export default function Home() {
   const [chef, setChef] = useState('All')
   const [showFavourites, setShowFavourites] = useState(false)
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [activeTab, setActiveTab] = useState<'browse' | 'planner'>('browse')
   const [user, setUser] = useState<{ email?: string } | null>(null)
   const [heartedIds, setHeartedIds] = useState<Set<string>>(new Set())
   const supabase = createClient()
@@ -103,87 +105,118 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Filters */}
-      <div className="sticky top-[57px] z-30 bg-white/90 backdrop-blur border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-2">
-          {/* Search */}
-          <div className="relative flex-1 min-w-[180px]">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-            <input
-              type="search"
-              placeholder="Search recipes or chefs…"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full pl-8 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300"
-            />
-          </div>
-
-          {/* Dish type */}
-          <div className="relative">
-            <select
-              value={dishType}
-              onChange={e => setDishType(e.target.value)}
-              className="appearance-none pl-3 pr-8 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
-            >
-              {ALL_DISH_TYPES.map(t => <option key={t}>{t}</option>)}
-            </select>
-            <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-          </div>
-
-          {/* Chef */}
-          <div className="relative">
-            <select
-              value={chef}
-              onChange={e => setChef(e.target.value)}
-              className="appearance-none pl-3 pr-8 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
-            >
-              {ALL_CHEFS.map(c => <option key={c}>{c}</option>)}
-            </select>
-            <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-          </div>
-
-          {/* My favourites toggle */}
+      {/* Top-level tabs */}
+      <div className="sticky top-[57px] z-40 bg-white/90 backdrop-blur border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 flex gap-1 py-2">
           <button
-            onClick={() => {
-              if (!user && !showFavourites) { setShowAuthModal(true); return }
-              setShowFavourites(v => !v)
-            }}
-            className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
-              showFavourites
-                ? 'bg-rose-50 border-rose-300 text-rose-600'
-                : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'
+            onClick={() => setActiveTab('browse')}
+            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'browse' ? 'bg-rose-500 text-white' : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            <Heart size={13} className={showFavourites ? 'fill-rose-500 stroke-rose-500' : ''} />
-            My favourites
+            Browse
           </button>
-
-          <span className="ml-auto text-xs text-slate-400 shrink-0">{filtered.length} recipes</span>
+          <button
+            onClick={() => setActiveTab('planner')}
+            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'planner' ? 'bg-rose-500 text-white' : 'text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <UtensilsCrossed size={13} />
+            Meal Planner
+          </button>
         </div>
       </div>
 
-      {/* Grid */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        {filtered.length === 0 ? (
-          <div className="text-center py-24 text-slate-400">
-            <p className="text-4xl mb-3">🔍</p>
-            <p className="text-sm">No recipes match your filters.</p>
+      {activeTab === 'planner' && (
+        <PlannerTab recipes={recipes} loggedIn={!!user} />
+      )}
+
+      {/* Browse tab: filters + grid */}
+      {activeTab === 'browse' && (
+        <>
+          <div className="sticky top-[105px] z-30 bg-white/90 backdrop-blur border-b border-slate-100">
+            <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-2">
+              {/* Search */}
+              <div className="relative flex-1 min-w-[180px]">
+                <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <input
+                  type="search"
+                  placeholder="Search recipes or chefs…"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  className="w-full pl-8 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300"
+                />
+              </div>
+
+              {/* Dish type */}
+              <div className="relative">
+                <select
+                  value={dishType}
+                  onChange={e => setDishType(e.target.value)}
+                  className="appearance-none pl-3 pr-8 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
+                >
+                  {ALL_DISH_TYPES.map(t => <option key={t}>{t}</option>)}
+                </select>
+                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+              </div>
+
+              {/* Chef */}
+              <div className="relative">
+                <select
+                  value={chef}
+                  onChange={e => setChef(e.target.value)}
+                  className="appearance-none pl-3 pr-8 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
+                >
+                  {ALL_CHEFS.map(c => <option key={c}>{c}</option>)}
+                </select>
+                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+              </div>
+
+              {/* My favourites toggle */}
+              <button
+                onClick={() => {
+                  if (!user && !showFavourites) { setShowAuthModal(true); return }
+                  setShowFavourites(v => !v)
+                }}
+                className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
+                  showFavourites
+                    ? 'bg-rose-50 border-rose-300 text-rose-600'
+                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'
+                }`}
+              >
+                <Heart size={13} className={showFavourites ? 'fill-rose-500 stroke-rose-500' : ''} />
+                My favourites
+              </button>
+
+              <span className="ml-auto text-xs text-slate-400 shrink-0">{filtered.length} recipes</span>
+            </div>
           </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
-            {filtered.map(recipe => (
-              <RecipeCard
-                key={recipe.id}
-                recipe={recipe}
-                hearted={heartedIds.has(recipe.id)}
-                loggedIn={!!user}
-                onAuthRequired={() => setShowAuthModal(true)}
-                onToggle={handleToggle}
-              />
-            ))}
-          </div>
-        )}
-      </main>
+
+          {/* Grid */}
+          <main className="max-w-7xl mx-auto px-4 py-6">
+            {filtered.length === 0 ? (
+              <div className="text-center py-24 text-slate-400">
+                <p className="text-4xl mb-3">🔍</p>
+                <p className="text-sm">No recipes match your filters.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
+                {filtered.map(recipe => (
+                  <RecipeCard
+                    key={recipe.id}
+                    recipe={recipe}
+                    hearted={heartedIds.has(recipe.id)}
+                    loggedIn={!!user}
+                    onAuthRequired={() => setShowAuthModal(true)}
+                    onToggle={handleToggle}
+                  />
+                ))}
+              </div>
+            )}
+          </main>
+        </>
+      )}
 
       {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
     </div>

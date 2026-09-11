@@ -144,24 +144,35 @@ export function WeekGrid({ recipes, loggedIn }: Props) {
 
   async function autoFill() {
     setAutoFilling(true)
-    const weekdays = [0, 1, 2, 3, 4] // Mon–Fri
-    const proteins = ['meat', 'fish', 'veg', 'anything', 'meat']
-    const efforts = ['easy', 'medium', 'adventurous', 'medium', 'easy']
+    const today = formatDate(new Date())
+    const proteins = ['meat', 'fish', 'veg', 'anything', 'meat', 'anything', 'veg']
+    const efforts = ['easy', 'medium', 'adventurous', 'medium', 'easy', 'medium', 'easy']
 
     const updates: Array<{ dayIdx: number; starter_id: string; main_id: string; snack_id: string | null }> = []
+    const usedIds: string[] = []
 
-    for (const i of weekdays) {
+    for (let i = 0; i < 7; i++) {
       const day = plan[i]
-      if (day.starter_id && day.main_id) continue // already filled
+      if (day.date < today) continue // skip past days
+      if (day.starter_id && day.main_id) {
+        // already filled — add to exclusion list so later days vary
+        if (day.starter_id) usedIds.push(day.starter_id)
+        if (day.main_id) usedIds.push(day.main_id)
+        continue
+      }
       try {
         const res = await fetch('/api/suggest', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ protein: proteins[i], effort: efforts[i], time: 'any' }),
+          body: JSON.stringify({ protein: proteins[i], effort: efforts[i], time: 'any', exclude_ids: usedIds }),
         })
         if (res.ok) {
           const data = await res.json()
-          if (!data.error) updates.push({ dayIdx: i, ...data })
+          if (!data.error) {
+            updates.push({ dayIdx: i, ...data })
+            if (data.starter_id) usedIds.push(data.starter_id)
+            if (data.main_id) usedIds.push(data.main_id)
+          }
         }
       } catch { /* skip this day */ }
     }
@@ -215,7 +226,9 @@ export function WeekGrid({ recipes, loggedIn }: Props) {
         {plan.map((day, i) => {
           const dayDate = new Date(weekStart)
           dayDate.setDate(dayDate.getDate() + i)
-          const isToday = formatDate(dayDate) === formatDate(new Date())
+          const todayStr = formatDate(new Date())
+          const isToday = day.date === todayStr
+          const isPast = day.date < todayStr
           const starter = day.starter_id ? recipeMap.get(day.starter_id) : null
           const main = day.main_id ? recipeMap.get(day.main_id) : null
           const snack = day.snack_id ? recipeMap.get(day.snack_id) : null
@@ -224,7 +237,9 @@ export function WeekGrid({ recipes, loggedIn }: Props) {
             <div
               key={day.date}
               className={`rounded-xl border p-3 transition-all ${
-                day.cooked
+                isPast
+                  ? 'border-slate-100 bg-slate-50 opacity-40'
+                  : day.cooked
                   ? 'border-green-200 bg-green-50 opacity-60'
                   : isToday
                   ? 'border-rose-200 bg-rose-50/40'

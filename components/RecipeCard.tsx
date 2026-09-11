@@ -30,15 +30,16 @@ interface Props {
   loggedIn: boolean
   onAuthRequired: () => void
   onToggle: (recipeId: string, hearted: boolean) => void
+  isUserRecipe?: boolean
 }
 
-export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle }: Props) {
+export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle, isUserRecipe }: Props) {
   const badgeClass = DISH_COLOURS[recipe.dishType] ?? DISH_COLOURS['Other']
 
   return (
     <div
-      onClick={() => window.open(recipe.url, '_blank')}
-      className="group flex flex-col bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden cursor-pointer hover:shadow-md hover:border-slate-200 transition-all duration-150"
+      onClick={() => recipe.url && window.open(recipe.url, '_blank')}
+      className={`group flex flex-col bg-white rounded-xl shadow-sm border overflow-hidden transition-all duration-150 ${recipe.url ? 'cursor-pointer hover:shadow-md hover:border-slate-200' : 'cursor-default'} ${isUserRecipe ? 'border-rose-100' : 'border-slate-100'}`}
     >
       {recipe.image ? (
         <div className="relative w-full aspect-[4/3] bg-slate-100 shrink-0">
@@ -76,6 +77,7 @@ export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle
           {recipe.title}
         </p>
         <p className="text-xs text-slate-400 mt-auto pt-1">{recipe.chef}</p>
+        {isUserRecipe && <p className="text-[9px] text-rose-400 italic">My recipe</p>}
       </div>
     </div>
   )

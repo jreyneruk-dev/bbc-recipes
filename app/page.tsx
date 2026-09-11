@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { Search, Heart, LogOut, ChevronDown, UtensilsCrossed } from 'lucide-react'
+import { Search, Heart, LogOut, ChevronDown, UtensilsCrossed, Plus } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { RecipeCard } from '@/components/RecipeCard'
 import { AuthModal } from '@/components/AuthModal'
 import { PlannerTab } from '@/components/PlannerTab'
+import { AddRecipeModal } from '@/components/AddRecipeModal'
 import recipesData from '@/data/recipes.json'
 
 interface Recipe {
@@ -32,6 +33,8 @@ export default function Home() {
   const [plannerView, setPlannerView] = useState<'tonight' | 'week'>('tonight')
   const [user, setUser] = useState<{ email?: string } | null>(null)
   const [heartedIds, setHeartedIds] = useState<Set<string>>(new Set())
+  const [userRecipes, setUserRecipes] = useState<Recipe[]>([])
+  const [showAddModal, setShowAddModal] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
@@ -45,22 +48,34 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (!user) { setHeartedIds(new Set()); return }
+    if (!user) { setHeartedIds(new Set()); setUserRecipes([]); return }
     fetch('/api/favourites')
       .then(r => r.json())
       .then(({ favourites }) => setHeartedIds(new Set(favourites ?? [])))
+    fetch('/api/recipes')
+      .then(r => r.json())
+      .then(({ recipes: ur }) => {
+        if (!Array.isArray(ur)) return
+        setUserRecipes(ur.map((r: { id: string; title: string; chef: string; dish_type: string; source_url: string | null; image_url: string | null }) => ({
+          id: r.id, title: r.title, chef: r.chef, dishType: r.dish_type,
+          url: r.source_url ?? '', image: r.image_url ?? null,
+        })))
+      })
   }, [user])
+
+  const allRecipes = useMemo(() => [...userRecipes, ...recipes], [userRecipes])
+  const userRecipeIds = useMemo(() => new Set(userRecipes.map(r => r.id)), [userRecipes])
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
-    return recipes.filter(r => {
+    return allRecipes.filter(r => {
       if (q && !r.title.toLowerCase().includes(q) && !r.chef.toLowerCase().includes(q)) return false
       if (dishType !== 'All' && r.dishType !== dishType) return false
       if (chef !== 'All' && r.chef !== chef) return false
       if (showFavourites && !heartedIds.has(r.id)) return false
       return true
     })
-  }, [search, dishType, chef, showFavourites, heartedIds])
+  }, [search, dishType, chef, showFavourites, heartedIds, allRecipes])
 
   function handleToggle(recipeId: string, hearted: boolean) {
     setHeartedIds(prev => {
@@ -151,7 +166,7 @@ export default function Home() {
       </div>
 
       {activeTab === 'planner' && (
-        <PlannerTab recipes={recipes} loggedIn={!!user} view={plannerView} />
+        <PlannerTab recipes={allRecipes} loggedIn={!!user} view={plannerView} />
       )}
 
       {/* Browse tab: filters + grid */}
@@ -212,6 +227,14 @@ export default function Home() {
               </button>
 
               <span className="ml-auto text-xs text-slate-400 shrink-0">{filtered.length} recipes</span>
+              {user && (
+                <button
+                  onClick={() => setShowAddModal(true)}
+                  className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 transition-colors shrink-0"
+                >
+                  <Plus size={13} /> Add recipe
+                </button>
+              )}
             </div>
           </div>
 
@@ -232,6 +255,7 @@ export default function Home() {
                     loggedIn={!!user}
                     onAuthRequired={() => setShowAuthModal(true)}
                     onToggle={handleToggle}
+                    isUserRecipe={userRecipeIds.has(recipe.id)}
                   />
                 ))}
               </div>
@@ -241,6 +265,18 @@ export default function Home() {
       )}
 
       {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+      {showAddModal && (
+        <AddRecipeModal
+          onClose={() => setShowAddModal(false)}
+          onSaved={recipe => {
+            setUserRecipes(prev => [{
+              id: recipe.id, title: recipe.title, chef: recipe.chef,
+              dishType: recipe.dish_type, url: recipe.source_url ?? '', image: recipe.image_url ?? null,
+            }, ...prev])
+            setShowAddModal(false)
+          }}
+        />
+      )}
     </div>
   )
 }

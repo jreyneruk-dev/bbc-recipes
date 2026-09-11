@@ -29,9 +29,10 @@ interface Props {
   hearted: boolean
   loggedIn: boolean
   onAuthRequired: () => void
+  onToggle: (recipeId: string, hearted: boolean) => void
 }
 
-export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired }: Props) {
+export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle }: Props) {
   const badgeClass = DISH_COLOURS[recipe.dishType] ?? DISH_COLOURS['Other']
 
   return (
@@ -75,6 +76,7 @@ export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired }: Props)
           initialHearted={hearted}
           loggedIn={loggedIn}
           onAuthRequired={onAuthRequired}
+          onToggle={onToggle}
         />
       </div>
     </div>

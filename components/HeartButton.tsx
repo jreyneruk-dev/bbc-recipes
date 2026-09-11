@@ -8,9 +8,10 @@ interface Props {
   initialHearted: boolean
   loggedIn: boolean
   onAuthRequired: () => void
+  onToggle: (recipeId: string, hearted: boolean) => void
 }
 
-export function HeartButton({ recipeId, initialHearted, loggedIn, onAuthRequired }: Props) {
+export function HeartButton({ recipeId, initialHearted, loggedIn, onAuthRequired, onToggle }: Props) {
   const [hearted, setHearted] = useState(initialHearted)
   const [loading, setLoading] = useState(false)
 
@@ -20,6 +21,7 @@ export function HeartButton({ recipeId, initialHearted, loggedIn, onAuthRequired
     setLoading(true)
     const next = !hearted
     setHearted(next)
+    onToggle(recipeId, next)
     try {
       await fetch('/api/favourites', {
         method: next ? 'POST' : 'DELETE',
@@ -28,6 +30,7 @@ export function HeartButton({ recipeId, initialHearted, loggedIn, onAuthRequired
       })
     } catch {
       setHearted(!next)
+      onToggle(recipeId, !next)
     } finally {
       setLoading(false)
     }

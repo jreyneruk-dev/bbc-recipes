@@ -59,6 +59,14 @@ export default function Home() {
     })
   }, [search, dishType, chef, showFavourites, heartedIds])
 
+  function handleToggle(recipeId: string, hearted: boolean) {
+    setHeartedIds(prev => {
+      const next = new Set(prev)
+      hearted ? next.add(recipeId) : next.delete(recipeId)
+      return next
+    })
+  }
+
   async function signOut() {
     await supabase.auth.signOut()
     setUser(null)
@@ -170,6 +178,7 @@ export default function Home() {
                 hearted={heartedIds.has(recipe.id)}
                 loggedIn={!!user}
                 onAuthRequired={() => setShowAuthModal(true)}
+                onToggle={handleToggle}
               />
             ))}
           </div>

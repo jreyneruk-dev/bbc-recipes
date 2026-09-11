@@ -29,6 +29,7 @@ export default function Home() {
   const [showFavourites, setShowFavourites] = useState(false)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [activeTab, setActiveTab] = useState<'browse' | 'planner'>('browse')
+  const [plannerView, setPlannerView] = useState<'tonight' | 'week'>('tonight')
   const [user, setUser] = useState<{ email?: string } | null>(null)
   const [heartedIds, setHeartedIds] = useState<Set<string>>(new Set())
   const supabase = createClient()
@@ -105,9 +106,9 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Top-level tabs */}
+      {/* Tab bar — main tabs + planner sub-tabs inline */}
       <div className="sticky top-[57px] z-40 bg-white/90 backdrop-blur border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 flex gap-1 py-2">
+        <div className="max-w-7xl mx-auto px-4 flex items-center gap-1 py-2">
           <button
             onClick={() => setActiveTab('browse')}
             className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
@@ -119,17 +120,38 @@ export default function Home() {
           <button
             onClick={() => setActiveTab('planner')}
             className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === 'planner' ? 'bg-rose-500 text-white' : 'text-slate-500 hover:text-slate-800'
+              activeTab === 'planner' && plannerView !== 'tonight' && plannerView !== 'week'
+                ? 'bg-rose-500 text-white'
+                : activeTab === 'planner'
+                ? 'text-slate-700 font-semibold'
+                : 'text-slate-500 hover:text-slate-800'
             }`}
           >
             <UtensilsCrossed size={13} />
             Meal Planner
           </button>
+
+          {activeTab === 'planner' && (
+            <>
+              <div className="w-px h-4 bg-slate-200 mx-1 shrink-0" />
+              {(['tonight', 'week'] as const).map(v => (
+                <button
+                  key={v}
+                  onClick={() => setPlannerView(v)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                    plannerView === v ? 'bg-rose-500 text-white' : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                >
+                  {v === 'tonight' ? 'Tonight' : 'This week'}
+                </button>
+              ))}
+            </>
+          )}
         </div>
       </div>
 
       {activeTab === 'planner' && (
-        <PlannerTab recipes={recipes} loggedIn={!!user} />
+        <PlannerTab recipes={recipes} loggedIn={!!user} view={plannerView} />
       )}
 
       {/* Browse tab: filters + grid */}

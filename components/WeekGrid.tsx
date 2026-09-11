@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import Image from 'next/image'
 import { Plus, Pin, RefreshCw, ChevronLeft, ChevronRight, Wand2, X } from 'lucide-react'
 import { RecipePicker } from './RecipePicker'
 
@@ -201,7 +202,7 @@ export function WeekGrid({ recipes, loggedIn }: Props) {
             <ChevronRight size={16} />
           </button>
         </div>
-        {isCurrentWeek && (
+        {!isLastWeek && (
           <button
             onClick={autoFill}
             disabled={autoFilling}
@@ -267,7 +268,20 @@ export function WeekGrid({ recipes, loggedIn }: Props) {
                         {slotKey}
                       </p>
                       {recipe ? (
-                        <div className={`rounded-lg p-2 border ${slot?.pinned ? 'border-rose-200 bg-rose-50' : 'border-slate-100 bg-slate-50'}`}>
+                        <div className={`rounded-lg border overflow-hidden ${slot?.pinned ? 'border-rose-200' : 'border-slate-100'}`}>
+                          {recipe.image && (
+                            <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+                              <Image
+                                src={recipe.image}
+                                alt={recipe.title}
+                                fill
+                                sizes="152px"
+                                className="object-cover"
+                                unoptimized
+                              />
+                            </div>
+                          )}
+                          <div className={`p-2 ${slot?.pinned ? 'bg-rose-50' : 'bg-slate-50'}`}>
                           <p className="text-[11px] font-medium text-slate-700 leading-snug line-clamp-2">
                             {recipe.title}
                           </p>
@@ -303,6 +317,7 @@ export function WeekGrid({ recipes, loggedIn }: Props) {
                           {readOnly && slot?.pinned && (
                             <Pin size={9} className="text-rose-400 mt-1" />
                           )}
+                          </div>
                         </div>
                       ) : (
                         !readOnly && !dimDay && (

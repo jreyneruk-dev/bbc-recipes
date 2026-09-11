@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import { X, Link, Camera, Loader2, ClipboardList } from 'lucide-react'
 
@@ -25,6 +25,8 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
   const [manual, setManual] = useState<ExtractedRecipe & { imageUrl: string }>({
     title: '', chef: '', dishType: 'Main course', imageUrl: '', ingredients: '', method: '',
   })
+  const [imageUploading, setImageUploading] = useState(false)
+  const formImageRef = useRef<HTMLInputElement>(null)
   const [url, setUrl] = useState('')
   const [extracting, setExtracting] = useState(false)
   const [extracted, setExtracted] = useState<ExtractedRecipe | null>(null)
@@ -104,6 +106,31 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
       setSaving(false)
     }
   }
+
+  const handleFormImage = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setImageUploading(true)
+    const reader = new FileReader()
+    reader.onload = async () => {
+      const base64 = (reader.result as string).split(',')[1]
+      try {
+        const res = await fetch('/api/recipes/image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageBase64: base64, mimeType: file.type }),
+        })
+        const data = await res.json()
+        if (data.url) setManual(p => ({ ...p, imageUrl: data.url }))
+        else setError(data.error ?? 'Image upload failed')
+      } catch {
+        setError('Image upload failed')
+      } finally {
+        setImageUploading(false)
+      }
+    }
+    reader.readAsDataURL(file)
+  }, [])
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 px-4 bg-black/40" onClick={onClose}>
@@ -214,14 +241,29 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
                 </div>
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Image URL <span className="normal-case font-normal">(optional)</span></label>
-                <input
-                  value={manual.imageUrl}
-                  onChange={e => setManual(p => ({ ...p, imageUrl: e.target.value }))}
-                  placeholder="https://…"
-                  type="url"
-                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
-                />
+                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Image <span className="normal-case font-normal">(optional)</span></label>
+                <input ref={formImageRef} type="file" accept="image/*" onChange={handleFormImage} className="hidden" />
+                {manual.imageUrl ? (
+                  <div className="mt-1 flex items-center gap-2">
+                    <div className="relative w-20 h-14 rounded-lg overflow-hidden shrink-0">
+                      <Image src={manual.imageUrl} alt="preview" fill className="object-cover" unoptimized />
+                    </div>
+                    <button
+                      onClick={() => setManual(p => ({ ...p, imageUrl: '' }))}
+                      className="text-xs text-slate-400 hover:text-red-500 transition-colors"
+                    >Remove</button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => formImageRef.current?.click()}
+                    disabled={imageUploading}
+                    className="mt-1 w-full py-2.5 border border-dashed border-slate-200 rounded-lg text-xs text-slate-400 hover:border-rose-300 hover:text-rose-500 transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    {imageUploading
+                      ? <><Loader2 size={12} className="animate-spin" /> Uploading…</>
+                      : <><Camera size={12} /> Upload a photo</>}
+                  </button>
+                )}
               </div>
               <div>
                 <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Ingredients</label>

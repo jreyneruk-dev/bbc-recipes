@@ -58,7 +58,8 @@ export default function Home() {
         if (!Array.isArray(ur)) return
         setUserRecipes(ur.map((r: { id: string; title: string; chef: string; dish_type: string; source_url: string | null; image_url: string | null }) => ({
           id: r.id, title: r.title, chef: r.chef, dishType: r.dish_type,
-          url: r.source_url ?? '', image: r.image_url ?? null,
+          url: `/recipe/${r.id}`,
+          image: r.image_url ?? null,
         })))
       })
   }, [user])
@@ -271,7 +272,7 @@ export default function Home() {
           onSaved={recipe => {
             setUserRecipes(prev => [{
               id: recipe.id, title: recipe.title, chef: recipe.chef,
-              dishType: recipe.dish_type, url: recipe.source_url ?? '', image: recipe.image_url ?? null,
+              dishType: recipe.dish_type, url: `/recipe/${recipe.id}`, image: recipe.image_url ?? null,
             }, ...prev])
             setShowAddModal(false)
           }}

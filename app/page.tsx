@@ -114,7 +114,7 @@ export default function Home() {
               placeholder="Search recipes or chefs…"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-8 pr-3 py-2 text-sm border border-slate-200 rounded-lg bg-slate-50 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:bg-white"
+              className="w-full pl-8 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300"
             />
           </div>
 
@@ -123,7 +123,7 @@ export default function Home() {
             <select
               value={dishType}
               onChange={e => setDishType(e.target.value)}
-              className="appearance-none pl-3 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-slate-50 focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
+              className="appearance-none pl-3 pr-8 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
             >
               {ALL_DISH_TYPES.map(t => <option key={t}>{t}</option>)}
             </select>
@@ -135,7 +135,7 @@ export default function Home() {
             <select
               value={chef}
               onChange={e => setChef(e.target.value)}
-              className="appearance-none pl-3 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-slate-50 focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
+              className="appearance-none pl-3 pr-8 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
             >
               {ALL_CHEFS.map(c => <option key={c}>{c}</option>)}
             </select>

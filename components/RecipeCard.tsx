@@ -38,7 +38,7 @@ export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle
   return (
     <div
       onClick={() => window.open(recipe.url, '_blank')}
-      className="group relative flex flex-col bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden cursor-pointer hover:shadow-md hover:border-slate-200 transition-all duration-150"
+      className="group flex flex-col bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden cursor-pointer hover:shadow-md hover:border-slate-200 transition-all duration-150"
     >
       {recipe.image ? (
         <div className="relative w-full aspect-[4/3] bg-slate-100 shrink-0">
@@ -58,26 +58,24 @@ export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle
       )}
 
       <div className="p-3 flex flex-col gap-1 flex-1">
-        <span className={`self-start text-[11px] font-medium px-2 py-0.5 rounded-full ${badgeClass}`}>
-          {recipe.dishType}
-        </span>
+        <div className="flex items-center justify-between gap-1">
+          <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${badgeClass}`}>
+            {recipe.dishType}
+          </span>
+          <div onClick={e => e.stopPropagation()}>
+            <HeartButton
+              recipeId={recipe.id}
+              hearted={hearted}
+              loggedIn={loggedIn}
+              onAuthRequired={onAuthRequired}
+              onToggle={onToggle}
+            />
+          </div>
+        </div>
         <p className="text-sm font-semibold text-slate-800 leading-snug line-clamp-2 mt-0.5">
           {recipe.title}
         </p>
         <p className="text-xs text-slate-400 mt-auto pt-1">{recipe.chef}</p>
-      </div>
-
-      <div
-        className="absolute top-2 right-2"
-        onClick={e => e.stopPropagation()}
-      >
-        <HeartButton
-          recipeId={recipe.id}
-          hearted={hearted}
-          loggedIn={loggedIn}
-          onAuthRequired={onAuthRequired}
-          onToggle={onToggle}
-        />
       </div>
     </div>
   )

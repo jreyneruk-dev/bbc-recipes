@@ -5,14 +5,13 @@ import { Heart } from 'lucide-react'
 
 interface Props {
   recipeId: string
-  initialHearted: boolean
+  hearted: boolean
   loggedIn: boolean
   onAuthRequired: () => void
   onToggle: (recipeId: string, hearted: boolean) => void
 }
 
-export function HeartButton({ recipeId, initialHearted, loggedIn, onAuthRequired, onToggle }: Props) {
-  const [hearted, setHearted] = useState(initialHearted)
+export function HeartButton({ recipeId, hearted, loggedIn, onAuthRequired, onToggle }: Props) {
   const [loading, setLoading] = useState(false)
 
   async function toggle(e: React.MouseEvent) {
@@ -20,16 +19,15 @@ export function HeartButton({ recipeId, initialHearted, loggedIn, onAuthRequired
     if (!loggedIn) { onAuthRequired(); return }
     setLoading(true)
     const next = !hearted
-    setHearted(next)
     onToggle(recipeId, next)
     try {
-      await fetch('/api/favourites', {
+      const res = await fetch('/api/favourites', {
         method: next ? 'POST' : 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ recipeId }),
       })
+      if (!res.ok) onToggle(recipeId, !next)
     } catch {
-      setHearted(!next)
       onToggle(recipeId, !next)
     } finally {
       setLoading(false)

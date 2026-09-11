@@ -73,7 +73,7 @@ export function RecipeCard({ recipe, hearted, loggedIn, onAuthRequired, onToggle
       >
         <HeartButton
           recipeId={recipe.id}
-          initialHearted={hearted}
+          hearted={hearted}
           loggedIn={loggedIn}
           onAuthRequired={onAuthRequired}
           onToggle={onToggle}

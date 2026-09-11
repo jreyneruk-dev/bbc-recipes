@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import Image from 'next/image'
-import { X, Link, Camera, Loader2 } from 'lucide-react'
+import { X, Link, Camera, Loader2, ClipboardList } from 'lucide-react'
 
 const DISH_TYPES = ['Main course', 'Starters & nibbles', 'Light meals & snacks', 'Cakes and baking', 'Desserts', 'Side dishes', 'Brunch', 'Other']
 
@@ -21,7 +21,10 @@ interface Props {
 }
 
 export function AddRecipeModal({ onSaved, onClose }: Props) {
-  const [tab, setTab] = useState<'url' | 'photo'>('url')
+  const [tab, setTab] = useState<'url' | 'photo' | 'form'>('url')
+  const [manual, setManual] = useState<ExtractedRecipe & { imageUrl: string }>({
+    title: '', chef: '', dishType: 'Main course', imageUrl: '', ingredients: '', method: '',
+  })
   const [url, setUrl] = useState('')
   const [extracting, setExtracting] = useState(false)
   const [extracted, setExtracted] = useState<ExtractedRecipe | null>(null)
@@ -118,7 +121,11 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
 
         {/* Tabs */}
         <div className="flex gap-1 px-5 pt-4">
-          {(['url', 'photo'] as const).map(t => (
+          {([
+            ['url', 'From URL', <Link size={13} />],
+            ['photo', 'From photo', <Camera size={13} />],
+            ['form', 'Form', <ClipboardList size={13} />],
+          ] as const).map(([t, label, icon]) => (
             <button
               key={t}
               onClick={() => { setTab(t); setExtracted(null); setError('') }}
@@ -126,8 +133,7 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
                 tab === t ? 'bg-rose-500 text-white' : 'text-slate-500 hover:text-slate-800'
               }`}
             >
-              {t === 'url' ? <Link size={13} /> : <Camera size={13} />}
-              {t === 'url' ? 'From URL' : 'From photo'}
+              {icon}{label}
             </button>
           ))}
         </div>
@@ -172,6 +178,108 @@ export function AddRecipeModal({ onSaved, onClose }: Props) {
               )}
               {error && <p className="text-xs text-red-500">{error}</p>}
             </>
+          )}
+
+          {/* Manual form */}
+          {tab === 'form' && !extracted && (
+            <div className="space-y-3">
+              <div>
+                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Title *</label>
+                <input
+                  value={manual.title}
+                  onChange={e => setManual(p => ({ ...p, title: e.target.value }))}
+                  placeholder="e.g. Grandma's apple crumble"
+                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                />
+              </div>
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Chef / source</label>
+                  <input
+                    value={manual.chef}
+                    onChange={e => setManual(p => ({ ...p, chef: e.target.value }))}
+                    placeholder="e.g. Nigel Slater"
+                    className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  />
+                </div>
+                <div>
+                  <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Dish type</label>
+                  <select
+                    value={manual.dishType}
+                    onChange={e => setManual(p => ({ ...p, dishType: e.target.value }))}
+                    className="mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  >
+                    {DISH_TYPES.map(t => <option key={t}>{t}</option>)}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Image URL <span className="normal-case font-normal">(optional)</span></label>
+                <input
+                  value={manual.imageUrl}
+                  onChange={e => setManual(p => ({ ...p, imageUrl: e.target.value }))}
+                  placeholder="https://…"
+                  type="url"
+                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
+                />
+              </div>
+              <div>
+                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Ingredients</label>
+                <textarea
+                  value={manual.ingredients}
+                  onChange={e => setManual(p => ({ ...p, ingredients: e.target.value }))}
+                  rows={5}
+                  placeholder="1 egg&#10;200g flour&#10;…"
+                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y"
+                />
+              </div>
+              <div>
+                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Method</label>
+                <textarea
+                  value={manual.method}
+                  onChange={e => setManual(p => ({ ...p, method: e.target.value }))}
+                  rows={6}
+                  placeholder="1. Preheat oven to 180°C&#10;2. …"
+                  className="w-full mt-1 px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 resize-y"
+                />
+              </div>
+              {error && <p className="text-xs text-red-500">{error}</p>}
+              <button
+                onClick={async () => {
+                  if (!manual.title.trim()) return
+                  setSaving(true)
+                  setError('')
+                  try {
+                    const res = await fetch('/api/recipes', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        recipe: {
+                          title: manual.title,
+                          chef: manual.chef || 'My recipe',
+                          dish_type: manual.dishType,
+                          source_url: '',
+                          image_url: manual.imageUrl || null,
+                          ingredients: manual.ingredients,
+                          method: manual.method,
+                        },
+                      }),
+                    })
+                    const data = await res.json()
+                    if (data.error) { setError(data.error); return }
+                    onSaved(data.recipe)
+                  } catch {
+                    setError('Failed to save. Please try again.')
+                  } finally {
+                    setSaving(false)
+                  }
+                }}
+                disabled={saving || !manual.title.trim()}
+                className="w-full py-2 bg-rose-500 text-white text-sm rounded-lg font-medium disabled:opacity-50 hover:bg-rose-600 transition-colors"
+              >
+                {saving ? 'Saving…' : 'Save recipe'}
+              </button>
+            </div>
           )}
 
           {/* Preview / edit form */}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { Search, Heart, LogOut, ChevronDown, UtensilsCrossed, Plus } from 'lucide-react'
+import { Search, Heart, LogOut, ChevronDown, UtensilsCrossed, Plus, Minus } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { RecipeCard } from '@/components/RecipeCard'
 import { AuthModal } from '@/components/AuthModal'
@@ -35,6 +35,7 @@ export default function Home() {
   const [heartedIds, setHeartedIds] = useState<Set<string>>(new Set())
   const [userRecipes, setUserRecipes] = useState<Recipe[]>([])
   const [showAddModal, setShowAddModal] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [editingRecipe, setEditingRecipe] = useState<{ id: string; title: string; chef: string; dishType: string; imageUrl: string; ingredients: string; method: string; sourceUrl: string } | null>(null)
   const [deleteMode, setDeleteMode] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
@@ -211,28 +212,41 @@ export default function Home() {
         <>
           <div className="sticky top-[105px] z-30 bg-white/90 backdrop-blur border-b border-slate-100">
             <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-2">
-              {/* Search */}
-              <div className="relative flex-1 min-w-[180px]">
-                <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-                <input
-                  type="search"
-                  placeholder="Search recipes or chefs…"
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  className="w-full pl-8 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300"
-                />
-              </div>
+              {/* Search — icon collapses to input */}
+              {searchOpen ? (
+                <div className="relative flex-1 min-w-[160px]">
+                  <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                  <input
+                    autoFocus
+                    type="search"
+                    placeholder="Search recipes or chefs…"
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    onBlur={() => { if (!search) setSearchOpen(false) }}
+                    className="w-full pl-8 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  />
+                </div>
+              ) : (
+                <button
+                  onClick={() => setSearchOpen(true)}
+                  title="Search"
+                  className={`flex items-center justify-center w-9 h-9 rounded-lg border transition-colors shrink-0 ${search ? 'border-rose-300 text-rose-500 bg-rose-50' : 'border-slate-300 text-slate-500 hover:border-slate-400 hover:text-slate-700'}`}
+                >
+                  <Search size={16} />
+                </button>
+              )}
 
               {/* Dish type */}
               <div className="relative">
                 <select
                   value={dishType}
                   onChange={e => setDishType(e.target.value)}
-                  className="appearance-none pl-3 pr-8 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
+                  className="appearance-none pl-3 pr-7 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
                 >
-                  {ALL_DISH_TYPES.map(t => <option key={t}>{t}</option>)}
+                  <option value="All">Type</option>
+                  {ALL_DISH_TYPES.slice(1).map(t => <option key={t}>{t}</option>)}
                 </select>
-                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
               </div>
 
               {/* Chef */}
@@ -240,11 +254,12 @@ export default function Home() {
                 <select
                   value={chef}
                   onChange={e => setChef(e.target.value)}
-                  className="appearance-none pl-3 pr-8 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
+                  className="appearance-none pl-3 pr-7 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
                 >
-                  {ALL_CHEFS.map(c => <option key={c}>{c}</option>)}
+                  <option value="All">Chef</option>
+                  {ALL_CHEFS.slice(1).map(c => <option key={c}>{c}</option>)}
                 </select>
-                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
               </div>
 
               {/* My favourites toggle */}
@@ -268,16 +283,18 @@ export default function Home() {
                 <>
                   <button
                     onClick={() => setShowAddModal(true)}
-                    className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 transition-colors shrink-0"
+                    title="Add recipe"
+                    className="flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 transition-colors shrink-0"
                   >
-                    <Plus size={13} /> Add recipe
+                    <Plus size={16} />
                   </button>
                   {userRecipes.length > 0 && (
                     <button
                       onClick={() => setDeleteMode(true)}
-                      className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg border border-slate-200 text-slate-600 hover:border-red-300 hover:text-red-600 transition-colors shrink-0"
+                      title="Delete recipes"
+                      className="flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 text-slate-500 hover:border-red-300 hover:text-red-500 transition-colors shrink-0"
                     >
-                      Delete
+                      <Minus size={16} />
                     </button>
                   )}
                 </>

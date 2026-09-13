@@ -200,6 +200,31 @@ export default function Home() {
               ))}
             </>
           )}
+
+          {/* Action buttons — right side of tab bar */}
+          {!deleteMode && (
+            <div className="ml-auto flex items-center gap-0.5 shrink-0">
+              <button
+                onClick={() => { if (!user && !showFavourites) { setShowAuthModal(true); return } setShowFavourites(v => !v) }}
+                title="My favourites"
+                className={`flex items-center justify-center w-8 h-8 rounded-lg transition-colors ${showFavourites ? 'text-rose-500' : 'text-slate-400 hover:text-slate-600'}`}
+              >
+                <Heart size={15} className={showFavourites ? 'fill-rose-500 stroke-rose-500' : ''} />
+              </button>
+              {user && (
+                <button onClick={() => setShowAddModal(true)} title="Add recipe"
+                  className="flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-rose-500 transition-colors">
+                  <Plus size={15} />
+                </button>
+              )}
+              {user && userRecipes.length > 0 && (
+                <button onClick={() => setDeleteMode(true)} title="Remove recipes"
+                  className="flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-red-500 transition-colors">
+                  <Minus size={15} />
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -241,7 +266,7 @@ export default function Home() {
                 <select
                   value={dishType}
                   onChange={e => setDishType(e.target.value)}
-                  className="appearance-none pl-3 pr-7 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
+                  className="appearance-none pl-3 pr-7 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer w-[68px]"
                 >
                   <option value="All">Type</option>
                   {ALL_DISH_TYPES.slice(1).map(t => <option key={t}>{t}</option>)}
@@ -254,7 +279,7 @@ export default function Home() {
                 <select
                   value={chef}
                   onChange={e => setChef(e.target.value)}
-                  className="appearance-none pl-3 pr-7 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer"
+                  className="appearance-none pl-3 pr-7 py-2 text-sm text-slate-900 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 cursor-pointer w-[68px]"
                 >
                   <option value="All">Chef</option>
                   {ALL_CHEFS.slice(1).map(c => <option key={c}>{c}</option>)}
@@ -262,43 +287,7 @@ export default function Home() {
                 <ChevronDown size={13} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
               </div>
 
-              {/* My favourites toggle */}
-              <button
-                onClick={() => {
-                  if (!user && !showFavourites) { setShowAuthModal(true); return }
-                  setShowFavourites(v => !v)
-                }}
-                className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
-                  showFavourites
-                    ? 'bg-rose-50 border-rose-300 text-rose-600'
-                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'
-                }`}
-              >
-                <Heart size={13} className={showFavourites ? 'fill-rose-500 stroke-rose-500' : ''} />
-                My favourites
-              </button>
-
               <span className="ml-auto text-xs text-slate-400 shrink-0">{filtered.length} recipes</span>
-              {user && !deleteMode && (
-                <>
-                  <button
-                    onClick={() => setShowAddModal(true)}
-                    title="Add recipe"
-                    className="flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 transition-colors shrink-0"
-                  >
-                    <Plus size={16} />
-                  </button>
-                  {userRecipes.length > 0 && (
-                    <button
-                      onClick={() => setDeleteMode(true)}
-                      title="Delete recipes"
-                      className="flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 text-slate-500 hover:border-red-300 hover:text-red-500 transition-colors shrink-0"
-                    >
-                      <Minus size={16} />
-                    </button>
-                  )}
-                </>
-              )}
               {deleteMode && !confirmingDelete && (
                 <>
                   <span className="text-xs text-slate-500 shrink-0">

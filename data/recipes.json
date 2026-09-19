@@ -67,7 +67,7 @@
     "id": "air_fryer_sprouts_01235",
     "title": "Air fryer sprouts with chestnut and bacon",
     "chef": "Poppy O'Toole",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/air_fryer_sprouts_01235",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/air_fryer_sprouts_01235_16x9.jpg"
   },
@@ -99,7 +99,7 @@
     "id": "baba_ganoush_44415",
     "title": "Baba ganoush",
     "chef": "Paul Hollywood",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/baba_ganoush_44415",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/baba_ganoush_44415_16x9.jpg"
   },
@@ -161,7 +161,7 @@
   },
   {
     "id": "beetroot_carpaccio_with_90863",
-    "title": "Beetroot carpaccio with goats‚Äô cheese and walnuts",
+    "title": "Beetroot carpaccio with goats’ cheese and walnuts",
     "chef": "Ella Tarn",
     "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/beetroot_carpaccio_with_90863",
@@ -217,7 +217,7 @@
   },
   {
     "id": "boulangre_potatoes_44898",
-    "title": "Boulang√®re potatoes",
+    "title": "Boulangère potatoes",
     "chef": "Philippa Davis",
     "dishType": "Light meals & snacks",
     "url": "https://www.bbc.co.uk/food/recipes/boulangre_potatoes_44898",
@@ -249,7 +249,7 @@
   },
   {
     "id": "broad_bean_and_goats_69027",
-    "title": "Broad bean and goats‚Äô cheese bruschetta",
+    "title": "Broad bean and goats’ cheese bruschetta",
     "chef": "Sabrina Ghayour",
     "dishType": "Light meals & snacks",
     "url": "https://www.bbc.co.uk/food/recipes/broad_bean_and_goats_69027",
@@ -267,7 +267,7 @@
     "id": "broccoli_and_corn_salad_49749",
     "title": "Broccoli salad",
     "chef": "Georgina Hayden",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/broccoli_and_corn_salad_49749",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/broccoli_and_corn_salad_49749_16x9.jpg"
   },
@@ -283,7 +283,7 @@
     "id": "sprouts_with_chestnuts_87565",
     "title": "Brussels sprouts with chestnuts and pancetta",
     "chef": "Mary Berry",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/sprouts_with_chestnuts_87565",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/sprouts_with_chestnuts_87565_16x9.jpg"
   },
@@ -329,7 +329,7 @@
   },
   {
     "id": "pumkin_borek_22658",
-    "title": "Butternut squash b√∂rek",
+    "title": "Butternut squash börek",
     "chef": "Georgina Hayden",
     "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/pumkin_borek_22658",
@@ -339,7 +339,7 @@
     "id": "cabbage_mallang_55625",
     "title": "Cabbage curry",
     "chef": "George and Fran Alagiah",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/cabbage_mallang_55625",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/cabbage_mallang_55625_16x9.jpg"
   },
@@ -387,7 +387,7 @@
     "id": "celeriacremoulade_77607",
     "title": "Celeriac remoulade",
     "chef": "Antony Worrall Thompson",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/celeriacremoulade_77607",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/celeriacremoulade_77607_16x9.jpg"
   },
@@ -561,11 +561,11 @@
   },
   {
     "id": "raw_chocolate_and_date_95869",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Chocolate and date raw brownies",
+    "chef": "BBC Food team",
+    "dishType": "Light meals & snacks",
     "url": "https://www.bbc.co.uk/food/recipes/raw_chocolate_and_date_95869",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/raw_chocolate_and_date_95869_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/raw_chocolate_and_date_95869_16x9.jpg"
   },
   {
     "id": "chocolate_warbat_56458",
@@ -659,7 +659,7 @@
     "id": "coleslaw_68108",
     "title": "Coleslaw",
     "chef": "The BBC Food team",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/coleslaw_68108",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/coleslaw_68108_16x9.jpg"
   },
@@ -675,7 +675,7 @@
     "id": "corn_tortillas_82894",
     "title": "Corn tortillas",
     "chef": "Karla Zazueta",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/corn_tortillas_82894",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/corn_tortillas_82894_16x9.jpg"
   },
@@ -763,7 +763,7 @@
     "id": "curlykaleorcavoloner_85608",
     "title": "Curly kale (or cavolo nero) with rosemary and chilli",
     "chef": "Sophie Grigson",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/curlykaleorcavoloner_85608",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/curlykaleorcavoloner_85608_16x9.jpg"
   },
@@ -889,11 +889,11 @@
   },
   {
     "id": "lentil_and_chickpea_31510",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Easy lentil and chickpea curry",
+    "chef": "BBC Food team",
+    "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/lentil_and_chickpea_31510",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/lentil_and_chickpea_31510_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/lentil_and_chickpea_31510_16x9.jpg"
   },
   {
     "id": "mushroom_stroganoff_with_83256",
@@ -977,11 +977,11 @@
   },
   {
     "id": "quesadilla_84511",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Easy vegetarian quesadilla",
+    "chef": "BBC Food team",
+    "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/quesadilla_84511",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/quesadilla_84511_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/quesadilla_84511_16x9.jpg"
   },
   {
     "id": "eggs_royale_86310",
@@ -1019,7 +1019,7 @@
     "id": "fennel_and_potato_gratin_29963",
     "title": "Fennel and potato gratin",
     "chef": "Mary Berry",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/fennel_and_potato_gratin_29963",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/fennel_and_potato_gratin_29963_16x9.jpg"
   },
@@ -1027,7 +1027,7 @@
     "id": "fennel_beetroot_slaw_05158",
     "title": "Fennel beetroot slaw",
     "chef": "Nigel Slater",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/fennel_beetroot_slaw_05158",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/fennel_beetroot_slaw_05158_16x9.jpg"
   },
@@ -1097,11 +1097,11 @@
   },
   {
     "id": "frozen_yoghurt_bites_52694",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Frozen yoghurt bites",
+    "chef": "BBC Food team",
+    "dishType": "Light meals & snacks",
     "url": "https://www.bbc.co.uk/food/recipes/frozen_yoghurt_bites_52694",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/frozen_yoghurt_bites_52694_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/frozen_yoghurt_bites_52694_16x9.jpg"
   },
   {
     "id": "gluten-free_apple_and_22345",
@@ -1115,7 +1115,7 @@
     "id": "easy_gluten-free_53343",
     "title": "Gluten-free flatbreads",
     "chef": "Becky Excell",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/easy_gluten-free_53343",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/easy_gluten-free_53343_16x9.jpg"
   },
@@ -1137,7 +1137,7 @@
   },
   {
     "id": "goats_cheese_salad_96364",
-    "title": "Goats‚Äô cheese salad",
+    "title": "Goats’ cheese salad",
     "chef": "Freddy Bird",
     "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/goats_cheese_salad_96364",
@@ -1177,7 +1177,7 @@
   },
   {
     "id": "ham_gruyere_wreath_48641",
-    "title": "Ham and gruy√®re wreath",
+    "title": "Ham and gruyère wreath",
     "chef": "Donal Skehan",
     "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/ham_gruyere_wreath_48641",
@@ -1403,7 +1403,7 @@
     "id": "lemon_hummus_83864",
     "title": "Lemon hummus",
     "chef": "Mary Berry",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/lemon_hummus_83864",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/lemon_hummus_83864_16x9.jpg"
   },
@@ -1483,7 +1483,7 @@
     "id": "mango_salad_01151",
     "title": "Mango salad",
     "chef": "Romy Gill",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/mango_salad_01151",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/mango_salad_01151_16x9.jpg"
   },
@@ -1491,7 +1491,7 @@
     "id": "mango_salsa_83183",
     "title": "Mango salsa",
     "chef": "Philli Armitage-Mattin",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/mango_salsa_83183",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/mango_salsa_83183_16x9.jpg"
   },
@@ -1499,7 +1499,7 @@
     "id": "marinatedbeetroot_67843",
     "title": "Marinated beetroot",
     "chef": "Gennaro Contaldo",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/marinatedbeetroot_67843",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/marinatedbeetroot_67843_16x9.jpg"
   },
@@ -1515,7 +1515,7 @@
     "id": "celeriac_remoulade_65265",
     "title": "Mary Berry's celeriac remoulade",
     "chef": "Mary Berry",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/celeriac_remoulade_65265",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/celeriac_remoulade_65265_16x9.jpg"
   },
@@ -1577,7 +1577,7 @@
   },
   {
     "id": "miso_mushroom_burgers_04901",
-    "title": "Miso mushroom burgers with crispy rice paper ‚Äòcrackling‚Äô",
+    "title": "Miso mushroom burgers with crispy rice paper ‘crackling’",
     "chef": "Elly Smart",
     "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/miso_mushroom_burgers_04901",
@@ -1633,7 +1633,7 @@
   },
   {
     "id": "mushroom_pt_73631",
-    "title": "Mushroom p√¢t√©",
+    "title": "Mushroom pâté",
     "chef": "Roxy Pope and Ben Pook",
     "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/mushroom_pt_73631",
@@ -1793,11 +1793,11 @@
   },
   {
     "id": "peanut_and_coconut_balls_71051",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Peanut and coconut balls",
+    "chef": "BBC Food team",
+    "dishType": "Light meals & snacks",
     "url": "https://www.bbc.co.uk/food/recipes/peanut_and_coconut_balls_71051",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/peanut_and_coconut_balls_71051_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/peanut_and_coconut_balls_71051_16x9.jpg"
   },
   {
     "id": "richchocolatebrownie_1933",
@@ -1843,7 +1843,7 @@
     "id": "pickled_red_cabbage_70451",
     "title": "Pickled red cabbage",
     "chef": "Pam Corbin",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/pickled_red_cabbage_70451",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/pickled_red_cabbage_70451_16x9.jpg"
   },
@@ -1851,7 +1851,7 @@
     "id": "pico_de_gallo_38112",
     "title": "Pico de gallo",
     "chef": "Karla Zazueta",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/pico_de_gallo_38112",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/pico_de_gallo_38112_16x9.jpg"
   },
@@ -1913,11 +1913,11 @@
   },
   {
     "id": "potsticker_dumplings_84280",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Chicken potsticker dumplings with dipping sauce",
+    "chef": "BBC Food team",
+    "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/potsticker_dumplings_84280",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/potsticker_dumplings_84280_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/potsticker_dumplings_84280_16x9.jpg"
   },
   {
     "id": "prawn_balls_23044",
@@ -1969,11 +1969,11 @@
   },
   {
     "id": "pressed_dried_fruit__and_06954",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Pressed dried fruit and nut energy bars",
+    "chef": "BBC Food team",
+    "dishType": "Light meals & snacks",
     "url": "https://www.bbc.co.uk/food/recipes/pressed_dried_fruit__and_06954",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/pressed_dried_fruit__and_06954_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/pressed_dried_fruit__and_06954_16x9.jpg"
   },
   {
     "id": "chicken_korma_09900",
@@ -2027,7 +2027,7 @@
     "id": "redcabbagesalad_78385",
     "title": "Red cabbage salad",
     "chef": "Sunil Vijayakar",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/redcabbagesalad_78385",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/redcabbagesalad_78385_16x9.jpg"
   },
@@ -2035,7 +2035,7 @@
     "id": "red_cabbage_slaw_72402",
     "title": "Red cabbage slaw",
     "chef": "Philippa Davis",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/red_cabbage_slaw_72402",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/red_cabbage_slaw_72402_16x9.jpg"
   },
@@ -2043,7 +2043,7 @@
     "id": "red_lentil_pancakes_05590",
     "title": "Red lentil pancakes",
     "chef": "Romy Gill",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/red_lentil_pancakes_05590",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/red_lentil_pancakes_05590_16x9.jpg"
   },
@@ -2051,7 +2051,7 @@
     "id": "red_onion_pickle_98165",
     "title": "Red onion pickle",
     "chef": "Pam Corbin",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/red_onion_pickle_98165",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/red_onion_pickle_98165_16x9.jpg"
   },
@@ -2075,7 +2075,7 @@
     "id": "rice_salad_86761",
     "title": "Rice salad",
     "chef": "Annie Rigg",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/rice_salad_86761",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/rice_salad_86761_16x9.jpg"
   },
@@ -2131,17 +2131,17 @@
     "id": "roasted_red_pepper_and_53318",
     "title": "Roasted red pepper and artichoke salad",
     "chef": "Mary Berry",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/roasted_red_pepper_and_53318",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/roasted_red_pepper_and_53318_16x9.jpg"
   },
   {
     "id": "roasted_red_pepper_50795",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Roasted red pepper hummus",
+    "chef": "BBC Food team",
+    "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/roasted_red_pepper_50795",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/roasted_red_pepper_50795_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/roasted_red_pepper_50795_16x9.jpg"
   },
   {
     "id": "roasted_tomato_tart_45199",
@@ -2209,7 +2209,7 @@
   },
   {
     "id": "salmon_en_croute_with_01965",
-    "title": "Salmon en cro√ªte",
+    "title": "Salmon en croûte",
     "chef": "Mary Berry",
     "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/salmon_en_croute_with_01965",
@@ -2227,7 +2227,7 @@
     "id": "salsa_roja_17693",
     "title": "Salsa roja",
     "chef": "Philli Armitage-Mattin",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/salsa_roja_17693",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/salsa_roja_17693_16x9.jpg"
   },
@@ -2265,7 +2265,7 @@
   },
   {
     "id": "simple_smoked_salmon_pt_82860",
-    "title": "Simple smoked salmon p√¢t√©",
+    "title": "Simple smoked salmon pâté",
     "chef": "Paul Hollywood",
     "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/simple_smoked_salmon_pt_82860",
@@ -2305,7 +2305,7 @@
   },
   {
     "id": "smoked_mackerel_pt_with_36210",
-    "title": "Smoked mackerel p√¢t√©",
+    "title": "Smoked mackerel pâté",
     "chef": "Valentine Warner",
     "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/smoked_mackerel_pt_with_36210",
@@ -2313,7 +2313,7 @@
   },
   {
     "id": "smoked_salmon_and_47655",
-    "title": "Smoked salmon and watercress p√¢t√©",
+    "title": "Smoked salmon and watercress pâté",
     "chef": "Mary Berry",
     "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/smoked_salmon_and_47655",
@@ -2321,7 +2321,7 @@
   },
   {
     "id": "smokedsalmontartarwi_92584",
-    "title": "Smoked salmon blini canap√©s",
+    "title": "Smoked salmon blini canapés",
     "chef": "Smiths of Smithfield",
     "dishType": "Starters & nibbles",
     "url": "https://www.bbc.co.uk/food/recipes/smokedsalmontartarwi_92584",
@@ -2385,11 +2385,11 @@
   },
   {
     "id": "spinach_and_ricotta_21673",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Spinach and ricotta ravioli with sage butter",
+    "chef": "BBC Food team",
+    "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/spinach_and_ricotta_21673",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/spinach_and_ricotta_21673_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/spinach_and_ricotta_21673_16x9.jpg"
   },
   {
     "id": "spinach_borek_pastries_58837",
@@ -2475,7 +2475,7 @@
     "id": "pickledonions_7719",
     "title": "Sweet pickled onions",
     "chef": "Pam Corbin",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/pickledonions_7719",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/pickledonions_7719_16x9.jpg"
   },
@@ -2497,7 +2497,7 @@
   },
   {
     "id": "sweet_potato_rsti_98950",
-    "title": "Sweet potato r√∂sti",
+    "title": "Sweet potato rösti",
     "chef": "Lucy Parker",
     "dishType": "Light meals & snacks",
     "url": "https://www.bbc.co.uk/food/recipes/sweet_potato_rsti_98950",
@@ -2555,7 +2555,7 @@
     "id": "toastedcashewandchil_89382",
     "title": "Toasted cashew and chilli broccoli salad with sesame soy dressing",
     "chef": "Paul Rankin",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/toastedcashewandchil_89382",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/toastedcashewandchil_89382_16x9.jpg"
   },
@@ -2571,7 +2571,7 @@
     "id": "hardcore_coleslaw_23307",
     "title": "Tom Kerridge's hardcore coleslaw",
     "chef": "Tom Kerridge",
-    "dishType": "Side Dish",
+    "dishType": "Side dishes",
     "url": "https://www.bbc.co.uk/food/recipes/hardcore_coleslaw_23307",
     "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/hardcore_coleslaw_23307_16x9.jpg"
   },
@@ -2649,7 +2649,7 @@
   },
   {
     "id": "vegan_cream_cheese_53665",
-    "title": "Vegan cream ‚Äúcheese‚Äù",
+    "title": "Vegan cream “cheese”",
     "chef": "Sophie Whitbread",
     "dishType": "Other",
     "url": "https://www.bbc.co.uk/food/recipes/vegan_cream_cheese_53665",
@@ -2705,7 +2705,7 @@
   },
   {
     "id": "vegan_shepherds_pie_05111",
-    "title": "Vegan shepherd‚Äôs pie",
+    "title": "Vegan shepherd’s pie",
     "chef": "Justine Pattison",
     "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/vegan_shepherds_pie_05111",
@@ -2753,11 +2753,11 @@
   },
   {
     "id": "red_lentil_and_aubergine_33187",
-    "title": "Not Found",
-    "chef": "",
-    "dishType": "",
+    "title": "Vegetarian moussaka",
+    "chef": "BBC Food team",
+    "dishType": "Main course",
     "url": "https://www.bbc.co.uk/food/recipes/red_lentil_and_aubergine_33187",
-    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_448/recipes/red_lentil_and_aubergine_33187_16x9.jpg"
+    "image": "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/red_lentil_and_aubergine_33187_16x9.jpg"
   },
   {
     "id": "perfect_vegetable_spring_12478",

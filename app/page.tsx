@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { Search, Heart, LogOut, ChevronDown, UtensilsCrossed, Plus, Minus } from 'lucide-react'
+import { Search, Heart, LogOut, ChevronDown, UtensilsCrossed, Plus, Minus, Shuffle } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { RecipeCard } from '@/components/RecipeCard'
 import { AuthModal } from '@/components/AuthModal'
@@ -36,6 +36,7 @@ export default function Home() {
   const [userRecipes, setUserRecipes] = useState<Recipe[]>([])
   const [showAddModal, setShowAddModal] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [shuffledFiltered, setShuffledFiltered] = useState<Recipe[] | null>(null)
   const [editingRecipe, setEditingRecipe] = useState<{ id: string; title: string; chef: string; dishType: string; imageUrl: string; ingredients: string; method: string; sourceUrl: string } | null>(null)
   const [deleteMode, setDeleteMode] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
@@ -83,6 +84,22 @@ export default function Home() {
       return true
     })
   }, [search, dishType, chef, showFavourites, heartedIds, allRecipes])
+
+  // Clear shuffle when filters change
+  useEffect(() => { setShuffledFiltered(null) }, [filtered])
+
+  function shuffleList() {
+    const arr = [...filtered]
+    const bytes = new Uint32Array(arr.length)
+    crypto.getRandomValues(bytes)
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = bytes[i] % (i + 1);
+      [arr[i], arr[j]] = [arr[j], arr[i]]
+    }
+    setShuffledFiltered(arr)
+  }
+
+  const displayed = shuffledFiltered ?? filtered
 
   function handleToggle(recipeId: string, hearted: boolean) {
     setHeartedIds(prev => {
@@ -261,6 +278,15 @@ export default function Home() {
                 </button>
               )}
 
+              {/* Shuffle */}
+              <button
+                onClick={shuffleList}
+                title="Shuffle recipes"
+                className={`flex items-center justify-center w-9 h-9 rounded-lg border transition-colors shrink-0 ${shuffledFiltered ? 'border-rose-300 text-rose-500 bg-rose-50' : 'border-slate-300 text-slate-500 hover:border-slate-400 hover:text-slate-700'}`}
+              >
+                <Shuffle size={15} />
+              </button>
+
               {/* Dish type */}
               <div className="relative">
                 <select
@@ -334,7 +360,7 @@ export default function Home() {
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
-                {filtered.map(recipe => (
+                {displayed.map(recipe => (
                   <RecipeCard
                     key={recipe.id}
                     recipe={recipe}
